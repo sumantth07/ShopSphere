@@ -1,0 +1,21 @@
+# Maven build files
+target/
+
+# IDE
+.idea/
+*.iml
+
+# Environment variables
+.env
+.env.*
+
+# Uploaded files
+uploads/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.bak

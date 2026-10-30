@@ -1,0 +1,15 @@
+{
+  "input_rows": 699,
+  "clean_rows": 699,
+  "rejected_rows": 0,
+  "adjustments": {
+    "description text repaired (mojibake/entities)": 428,
+    "empty description": 1
+  },
+  "distinct_categories": 23,
+  "distinct_sellers": 196,
+  "distinct_brands": 379,
+  "available_true": 676,
+  "available_false": 23,
+  "same_name_and_brand_pairs_kept_distinct_ids": 18
+}

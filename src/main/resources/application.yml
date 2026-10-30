@@ -1,0 +1,74 @@
+spring:
+  application.name: shopsphere-backend
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/shopsphere}
+    username:  ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    open-in-view: false
+    hibernate.ddl-auto: validate        # schema is owned by Flyway; Hibernate only validates it
+  flyway.enabled: true
+  servlet.multipart:
+    max-file-size: 2MB
+    max-request-size: 3MB
+  mail:
+    host: ${MAIL_HOST:}                 # empty = dev console mailer (refused in the "prod" profile)
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+  security.oauth2.client.registration.google:
+    client-id: ${GOOGLE_CLIENT_ID:not-configured}
+    client-secret: ${GOOGLE_CLIENT_SECRET:not-configured}
+    scope: openid,profile,email
+server:
+  port: 8081
+  forward-headers-strategy: framework
+  error.include-stacktrace: never
+management.endpoints.web.exposure.include: health,info
+management:
+  health:
+    mail:
+      enabled: false
+shopsphere:
+  frontend-url: ${FRONTEND_ORIGIN:http://localhost:5173}
+  cors.allowed-origins: ${FRONTEND_ORIGIN:http://localhost:5173}
+  google-enabled: ${GOOGLE_ENABLED:false}
+  jwt:
+    secret: ${JWT_SECRET:}              # REQUIRED, >= 32 characters
+    issuer: shopsphere
+    audience: shopsphere-web
+    access-ttl-minutes: 15
+    refresh-ttl-days: 14
+  cookie:
+    secure: ${COOKIE_SECURE:false}      # true in production (HTTPS)
+    same-site: ${COOKIE_SAMESITE:Lax}   # "None" (+ secure=true) when frontend and API are on different sites
+  otp:
+    ttl-minutes: 10
+    max-attempts: 5
+    resend-cooldown-seconds: 60
+  mail.from: ${MAIL_FROM:no-reply@shopsphere.local}
+  upload:
+    dir: ${UPLOAD_DIR:./uploads}      # local disk; use a persistent volume or cloud storage in production
+    max-bytes: 2097152
+  catalog:
+    max-page-size: 60
+    default-page-size: 24
+  shipping:
+    flat-fee-per-seller: 0.00
+  delivery:                              # DEMO delivery estimate rule: base + (sellerId mod spread) days
+    base-days: 3
+    seller-spread-days: 5
+  inventory.low-stock-threshold: 10
+  admin-bootstrap:
+    email: ${ADMIN_EMAIL:}
+    password: ${ADMIN_PASSWORD:}
+  ai:
+    api-key: ${AI_API_KEY:}
+    model: ${AI_MODEL:gemini-2.5-flash}
+    base-url: ${AI_BASE_URL:https://generativelanguage.googleapis.com}
+    timeout-seconds: 25
+    max-message-chars: 1000
+    max-output-tokens: 700
